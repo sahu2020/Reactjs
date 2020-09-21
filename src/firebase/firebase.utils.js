@@ -38,19 +38,41 @@ export const signInWithGoogle = () => auth.signInWithPopup(provider).then((resul
   });
 
 export const inventoryDataFetch = () =>{
-  debugger
-  return firebase
-      .collection("inventory")
-      .get()
-      .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-              console.log(doc,'doc');
-            });
-          })
-          .catch(function (error) {
-            console.log(error,'doc error');
-  
-      })
+  return firebase.collection("inventory");
 }
+
+export const userProfileData = (userAuth) => {
+  if(!userAuth) return null;
+  const userRef = firestore.doc('users/${userAuth.uid}');
+  const snapShot = await userRef.get();
+  if(!snapShot.exists){
+    const {displayName, email} = userAuth;
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        isAdmin :false,
+        cart:[]
+      })
+    } catch (error) {
+      console.log('Error creating user',e.message);
+    }
+  }
+  return userRef;
+};
+
+export const updateCartDetails = (userRef, cartData) => { 
+  if(!userRef) return ;
+  const snapShot = await userRef.get();
+  if(!snapShot.exists) return;
+  try {
+    await userRef.update({
+      cart:cartData
+    })
+  } catch (error) {
+    console.log('Falied to update cart',e.message);
+  }
+
+};
 
 export default firebase;
