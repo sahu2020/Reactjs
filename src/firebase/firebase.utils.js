@@ -41,9 +41,9 @@ export const inventoryDataFetch = () =>{
   return firebase.collection("inventory");
 }
 
-export const userProfileData = (userAuth) => {
+export const userProfileData = async (userAuth) => {
   if(!userAuth) return null;
-  const userRef = firestore.doc('users/${userAuth.uid}');
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShot = await userRef.get();
   if(!snapShot.exists){
     const {displayName, email} = userAuth;
@@ -55,13 +55,13 @@ export const userProfileData = (userAuth) => {
         cart:[]
       })
     } catch (error) {
-      console.log('Error creating user',e.message);
+      console.log('Error creating user',error.message);
     }
   }
   return userRef;
 };
 
-export const updateCartDetails = (userRef, cartData) => { 
+export const updateCartDetails =  async (userRef, cartData) => { 
   if(!userRef) return ;
   const snapShot = await userRef.get();
   if(!snapShot.exists) return;
@@ -70,7 +70,7 @@ export const updateCartDetails = (userRef, cartData) => {
       cart:cartData
     })
   } catch (error) {
-    console.log('Falied to update cart',e.message);
+    console.log('Falied to update cart',error.message);
   }
 
 };
