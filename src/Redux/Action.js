@@ -3,7 +3,7 @@ import {
   STORE_DATA,
   ORDER_BY_CHANGE,
   CATEGORY_CHANGE,
-} from "./actionType";
+} from "./ActionType";
 
 
 export function LoginChange(userData,userRef){
