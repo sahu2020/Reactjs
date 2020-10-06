@@ -1,7 +1,6 @@
 import { auth } from 'firebase';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { faSearch, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import {
   signInWithGoogle,
   // auth,
@@ -11,7 +10,7 @@ import {
 import {
   OverlayTrigger,
   Tooltip,
-  FontAwesomeIcon,
+  // FontAwesomeIcon,
   Button,
   InputGroup,
   FormControl,
@@ -25,37 +24,39 @@ export default function NavigrationBar() {
   const userData = useSelector(state => state.userData);
   const dispatch = useDispatch();
  
-      useEffect(function () {
-        const subscribeToAuth = auth.onAuthStateChanged(async (user) => {
-          const userRef = await userProfileData(user);
-          if (!userRef) dispatch(LoginChange(null, null));
-          else {
-            userRef.onSnapshot((snapShot) => {
-              dispatch(LoginChange(snapShot.data(), userRef));
-            });
-          }
-        });
-        return function () {
-          subscribeToAuth();
-        };
-      }, []);
+      // useEffect(function () {
+      //   const subscribeToAuth = auth.onAuthStateChanged(async (user) => {
+      //     const userRef = await userProfileData(user);
+      //     if (!userRef) dispatch(LoginChange(null, null));
+      //     else {
+      //       userRef.onSnapshot((snapShot) => {
+      //         dispatch(LoginChange(snapShot.data(), userRef));
+      //       });
+      //     }
+      //   });
+      //   return function () {
+      //     subscribeToAuth();
+      //   };
+      // }, );
 
-
-  useEffect(async () => {
-    const inventoryRef = inventoryDataFetch();
-    inventoryRef.onSnapshot((snapShot) => {
-      const inventoryData = snapShot.docs.map((item) => {
-        const data = item.data();
-        const id = item.id;
-        return {
-          id,
-          ...data,
-        };
-      });
-      console.log(inventoryData);
-      dispatch(StoreData(inventoryData));
-    });
-  }, []);
+    // useEffect(
+    //   function () {
+    //     const inventoryRef = inventoryDataFetch();
+    //     inventoryRef.onSnapshot((snapShot) => {
+    //       const inventoryData = snapShot.docs.map((item) => {
+    //         const data = item.data();
+    //         const id = item.id;
+    //         return {
+    //           id,
+    //           ...data,
+    //         };
+    //       });
+    //       console.log(inventoryData);
+    //       dispatch(StoreData(inventoryData));
+    //     });
+    //   },
+    //   [dispatch]
+    // );
 
   const UserDisplay = () =>{
     if(userData){
