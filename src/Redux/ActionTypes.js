@@ -1,0 +1,5 @@
+export const LOGIN_CHANGE = 'LOGIN_CHANGE';
+export const STORE_DATA = 'STORE_DATA';
+export const UPDATE_CART = 'UPDATE_CART';
+export const ORDER_BY_CHANGE = 'ORDER_BY_CHANGE';
+export const CATEGORY_CHANGE = 'CATEGORY_CHANGE';
